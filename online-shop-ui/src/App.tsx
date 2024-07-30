@@ -1,7 +1,8 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.scss";
-import Products from "./components/products/products";
+import Products from "./components/products-list/products-list";
 import ProductDetails from "./components/product-details/product-details";
+import ShoppingCart from "./components/shopping-cart/shopping-cart";
 
 export default function App() {
   return (
@@ -12,6 +13,7 @@ export default function App() {
           <Route index element={<Products />} />
           <Route path=":id" element={<ProductDetails />} />
         </Route>
+        <Route path="/shopping-cart" element={<ShoppingCart/>} />
         <Route path="*" element={<Navigate to="/products" />} />
       </Routes>
     </>

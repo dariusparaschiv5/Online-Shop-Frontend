@@ -1,11 +1,18 @@
-import { useParams } from "react-router-dom";
-import { productsList } from "../../data/products";
+import { Link, useParams } from "react-router-dom";
+import { Product, productsList } from "../../data/products";
 import "./product-details.scss";
+import {
+  ShoppingCartAddContext,
+  ShoppingCartProduct,
+} from "../../context/shopping-cart-context";
+import { useContext } from "react";
 
 const ProductDetails = () => {
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams();
+  const product: Product | undefined = productsList.find((p) => p.id === id);
 
-  const product = productsList.find((p) => p.id.toString() === id);
+  const addProductToShoppingCart: (item: ShoppingCartProduct) => void =
+    useContext(ShoppingCartAddContext);
 
   if (!product) {
     return <h1>No product found!</h1>;
@@ -15,6 +22,22 @@ const ProductDetails = () => {
       <div className="product-detail-header">
         <h1 className="product-details-title">Product: {product.name}</h1>
         <div className="buttons">
+          <Link to="/shopping-cart">
+            <button
+              className="add-button"
+              onClick={() =>
+                addProductToShoppingCart({
+                  id: product.id,
+                  category: product.category.name,
+                  productName: product.name,
+                  price: product.price,
+                  quantity: 1,
+                })
+              }
+            >
+              ADD
+            </button>
+          </Link>
           <button className="edit-button">EDIT</button>
           <button className="delete-button">DELETE</button>
         </div>

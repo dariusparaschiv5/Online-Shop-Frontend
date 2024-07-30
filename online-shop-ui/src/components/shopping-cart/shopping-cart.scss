@@ -1,4 +1,4 @@
-.products-container {
+.shoping-container {
   margin: 60px;
   font-family: Arial, sans-serif;
 
@@ -17,7 +17,6 @@
     justify-content: flex-end;
   }
 
-  .add-button,
   .cart-button {
     background-color: #007bff;
     color: white;
@@ -42,17 +41,6 @@
       padding: 10px;
       border-right: 1.5px solid #797373;
       border-bottom: 1.5px solid #797373;
-    }
-
-    .product-details-link-col {
-      text-align: center;
-
-      .product-details-page-btn {
-        border: none;
-        font-size: large;
-        color: #007bff;
-      }
-
     }
   }
 }
