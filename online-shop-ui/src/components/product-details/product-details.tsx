@@ -1,11 +1,15 @@
-import { Product } from "../../data/products";
-import "./product-details.scss"
+import { useParams } from "react-router-dom";
+import { productsList } from "../../data/products";
+import "./product-details.scss";
 
-type ProductProps = {
-  product: Product;
-};
+const ProductDetails = () => {
+  const { id } = useParams<{ id: string }>();
 
-export default function ProductDetails({ product }: ProductProps) {
+  const product = productsList.find((p) => p.id.toString() === id);
+
+  if (!product) {
+    return <h1>No product found!</h1>;
+  }
   return (
     <div className="product-detail-container">
       <div className="product-detail-header">
@@ -40,7 +44,7 @@ export default function ProductDetails({ product }: ProductProps) {
             </td>
             <td>
               <div className="product-image">
-                <img src="path_to_your_image.jpg" alt="Product Image" />
+                <img src="path_to_image.jpg" alt="Product Image" />
               </div>
             </td>
           </tr>
@@ -48,4 +52,6 @@ export default function ProductDetails({ product }: ProductProps) {
       </table>
     </div>
   );
-}
+};
+
+export default ProductDetails;

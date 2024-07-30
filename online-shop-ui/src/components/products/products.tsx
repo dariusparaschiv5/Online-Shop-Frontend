@@ -1,6 +1,6 @@
-import "./products.scss"
-
+import "./products.scss";
 import { Product, productsList } from "../../data/products";
+import { Link } from "react-router-dom";
 
 export default function Products() {
   const products: Product[] = productsList;
@@ -28,7 +28,11 @@ export default function Products() {
                 <td>{product.category.name}</td>
                 <td>{product.name}</td>
                 <td>{product.price}</td>
-                <td className="arrow-cell">&gt;</td>
+                <td className="product-details-link-col">
+                  <Link to={`/products/${product.id}`}>
+                  <button className="product-details-page-btn">{">"}</button>
+                  </Link>
+                </td>
               </tr>
             ))}
           </tbody>

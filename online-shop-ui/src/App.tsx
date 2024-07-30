@@ -1,15 +1,19 @@
-import ProductDetails from "./components/product-details/product-details";
-import { Product, productsList } from "./data/products";
+import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.scss";
+import Products from "./components/products/products";
+import ProductDetails from "./components/product-details/product-details";
 
-const product: Product = productsList[0];
-
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <ProductDetails product={product} />
-    </div>
+    <>
+      <Routes>
+        <Route path="/" element={<Navigate to="/products" />} />
+        <Route path="/products">
+          <Route index element={<Products />} />
+          <Route path=":id" element={<ProductDetails />} />
+        </Route>
+        <Route path="*" element={<Navigate to="/products" />} />
+      </Routes>
+    </>
   );
 }
-
-export default App;

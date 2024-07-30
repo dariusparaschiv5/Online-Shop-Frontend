@@ -16,9 +16,15 @@ export interface ProductCategory {
 }
 
 const productCategory1: ProductCategory = {
-  name: "Digital Camera",
-  price: 299.99,
-  description: "A high-resolution digital camera with 20MP sensor, 5x optical zoom, and built-in WiFi."
+  name: "Drinks",
+  price: 9.99,
+  description: "Your pefect choice for a hot day."
+};
+
+const productCategory2: ProductCategory = {
+  name: "Food",
+  price: 32.99,
+  description: "Embrace the italian vibe."
 };
 
 
@@ -26,8 +32,8 @@ export const productsList: Product[] = [
   {
     id: "1",
     category: productCategory1,
-    name: "Lorem Ipsum Dolor",
-    price: 150,
+    name: "Cola",
+    price: 10,
     description: "desc1",
     weigh: 2,
     supplier: "vivo",
@@ -36,8 +42,8 @@ export const productsList: Product[] = [
   {
     id: "2",
     category: productCategory1,
-    name: "Sit Amet Consectetur",
-    price: 100,
+    name: "Pepsi",
+    price: 10,
     description: "",
     weigh: 0,
     supplier: "",
@@ -46,8 +52,8 @@ export const productsList: Product[] = [
   {
     id: "3",
     category: productCategory1,
-    name: "Adipiscing Elit",
-    price: 75,
+    name: "Fanta",
+    price: 9,
     description: "",
     weigh: 0,
     supplier: "",
@@ -55,9 +61,9 @@ export const productsList: Product[] = [
   },
   {
     id: "4",
-    category: productCategory1,
-    name: "Sed Do Eiusmod",
-    price: 75,
+    category: productCategory2,
+    name: "Pizza",
+    price: 32,
     description: "",
     weigh: 0,
     supplier: "",
@@ -65,9 +71,9 @@ export const productsList: Product[] = [
   },
   {
     id: "5",
-    category: productCategory1,
-    name: "Tempor Incididunt",
-    price: 75,
+    category: productCategory2,
+    name: "Pasta",
+    price: 28,
     description: "",
     weigh: 0,
     supplier: "",
