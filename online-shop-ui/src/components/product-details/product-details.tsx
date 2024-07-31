@@ -1,12 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { ShoppingCartAddContext } from "../../context/shopping-cart-context";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Product } from "../../data/products";
 import { productsService } from "../../services/products.service";
-import './product-details.scss'
+import "./product-details.scss";
 
 const ProductDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [product, setProduct] = useState<Product | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
@@ -32,6 +33,18 @@ const ProductDetails = () => {
 
     fetchProduct();
   }, [id]);
+
+  const handleDelete = async () => {
+    if (confirm("Are you sure you want to delete this product?")) {
+      try {
+        await productsService.delete(id!);
+        navigate("/products");
+      } catch (error) {
+        console.error("Error deleting product:", error);
+        setError("Failed to delete product");
+      }
+    }
+  };
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -60,7 +73,9 @@ const ProductDetails = () => {
               </button>
             </Link>
             <button className="edit-button">EDIT</button>
-            <button className="delete-button">DELETE</button>
+            <button className="delete-button" onClick={handleDelete}>
+              DELETE
+            </button>
           </div>
         </div>
         <table className="product-details-table">
