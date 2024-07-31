@@ -1,10 +1,12 @@
 import { PRODUCT_API_URL } from "../constants/url.constant";
 
 export const productsService = {
-  findAll: async (signal: AbortSignal | null = null) => {
+  findAll: async () => {
     console.log("Attempting to fetch products from API:", PRODUCT_API_URL);
     try {
-      const response = await fetch(PRODUCT_API_URL, { signal });
+      const response = await fetch(PRODUCT_API_URL, {
+        method: "GET",
+      });
       console.log("Response received:", response);
       if (!response.ok) {
         throw new Error(`HTTP error: Status ${response.status}`);
@@ -14,6 +16,7 @@ export const productsService = {
       console.log("JSON data parsed from the response:", jsonData);
       return jsonData;
     } catch (err) {
+      console.log(err);
       console.error("Failed to fetch or parse response:", err);
       throw err;
     }

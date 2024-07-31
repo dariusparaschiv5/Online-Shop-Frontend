@@ -23,11 +23,11 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
   >([]);
 
   function addItemToCart(item: ShoppingCartProduct) {
-    const itemExistsInTheCart: boolean =
+    const isInCart: boolean =
       shoppingCartItems.find((i) => i.id === item.id) !== undefined
         ? true
         : false;
-    if (itemExistsInTheCart) {
+    if (isInCart) {
       setShoppingCartItems((prevItems) =>
         prevItems.map((i) =>
           i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i

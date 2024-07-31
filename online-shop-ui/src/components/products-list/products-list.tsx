@@ -11,12 +11,10 @@ export default function Products() {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const controller = new AbortController();
-
     const fetchAllProducts = async () => {
       console.log("Starting to fetch all products...");
       try {
-        const allProducts = await productsService.findAll(controller.signal);
+        const allProducts = await productsService.findAll();
         console.log("Fetched products successfully:", allProducts);
         setProducts(allProducts);
         setError(null);
@@ -35,8 +33,6 @@ export default function Products() {
     };
 
     fetchAllProducts();
-
-    return () => controller.abort();
   }, []);
   return (
     <>
@@ -56,9 +52,11 @@ export default function Products() {
             <th></th>
           </tr>
           {products &&
-            products.map((product) => (
-              <ProductListItem key={product.id} product={product} />
-            ))}
+            products.map((product) =>
+              product ? (
+                <ProductListItem key={product.id} product={product} />
+              ) : null
+            )}
         </table>
       </div>
     </>
