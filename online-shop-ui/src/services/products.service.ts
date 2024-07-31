@@ -22,9 +22,10 @@ export const productsService = {
     }
   },
 
-  getById: async (id: string, signal: AbortSignal) => {
+  findOneById: async (id: string) => {
     try {
-      const response = await fetch(`${PRODUCT_API_URL}/${id}`, { signal });
+      console.log("ID", id);
+      const response = await fetch(`${PRODUCT_API_URL}/${id}`);
 
       if (!response.ok) {
         throw new Error(`HTTP error: Status ${response.status}`);
@@ -37,11 +38,10 @@ export const productsService = {
     }
   },
 
-  delete: async (id: string, signal: AbortSignal) => {
+  delete: async (id: string) => {
     try {
       const response = await fetch(`$PRODUCT_API_URL}/${id}`, {
         method: "DELETE",
-        signal,
       });
 
       if (!response.ok) {

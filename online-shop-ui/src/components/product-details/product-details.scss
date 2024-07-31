@@ -5,40 +5,10 @@
   margin: 20px;
   border: none !important;
 
-  .product-details-table {
-    width: 100%;
-    border-collapse: collapse;
+  table,
+  tr,
+  td {
     border: none !important;
-
-    .product-image {
-      img {
-        width: 120px;
-        height: 110px;
-        display: block;
-        margin-left: auto;
-        margin-bottom: 105px;
-        background-color: grey;
-      }
-    }
-
-    .product-info {
-      margin-bottom: 20px;
-      border: none;
-
-      .info-row {
-        display: flex;
-        margin-bottom: 10px;
-        padding: 10px;
-
-        label {
-          color: gray;
-          width: 100px;
-          margin-right: 50px;
-          white-space: nowrap;
-          text-align: right;
-        }
-      }
-    }
   }
 
   .product-detail-header {
@@ -55,9 +25,9 @@
       display: flex;
       justify-content: flex-end;
 
-      .add-button,
       .edit-button,
-      .delete-button {
+      .delete-button,
+      .add-button {
         padding: 12px 40px;
         font-size: 16px;
         font-weight: bold;
@@ -75,6 +45,51 @@
       .delete-button {
         background-color: #dc3545;
         color: black;
+      }
+    }
+  }
+
+  .product-details-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: none !important;
+
+    th,
+    td {
+      text-align: left;
+      padding: 10px;
+      border-right: 1.5px solid #797373;
+      border-bottom: 1.5px solid #797373;
+    }
+
+    .product-image {
+      img {
+        width: 120px;
+        height: 110px;
+        display: block;
+        margin-left: auto;
+        margin-bottom: 105px;
+        background-color: grey;
+      }
+    }
+
+    .product-info {
+      margin-bottom: 20px;
+      border: none !important;
+
+      .info-row {
+        display: flex;
+        margin-bottom: 10px;
+        padding: 10px;
+        border: none !important;
+
+        label {
+          color: gray;
+          width: 100px;
+          margin-right: 50px;
+          white-space: nowrap;
+          text-align: right;
+        }
       }
     }
   }

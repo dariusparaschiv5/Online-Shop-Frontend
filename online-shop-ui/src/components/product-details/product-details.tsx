@@ -1,49 +1,69 @@
+import { useContext, useEffect, useState } from "react";
+import { ShoppingCartAddContext } from "../../context/shopping-cart-context";
 import { Link, useParams } from "react-router-dom";
-import { Product, productsList } from "../../data/products";
-import "./product-details.scss";
-import {
-  ShoppingCartAddContext,
-  ShoppingCartProduct,
-} from "../../context/shopping-cart-context";
-import { useContext } from "react";
+import { Product } from "../../data/products";
+import { productsService } from "../../services/products.service";
+import './product-details.scss'
 
 const ProductDetails = () => {
   const { id } = useParams();
-  const product: Product | undefined = productsList.find((p) => p.id === id);
+  const [product, setProduct] = useState<Product | null>(null);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
 
-  const addProductToShoppingCart: (item: ShoppingCartProduct) => void =
-    useContext(ShoppingCartAddContext);
+  const addItemToCart = useContext(ShoppingCartAddContext);
 
-  if (!product) {
-    return <h1>No product found!</h1>;
-  }
+  useEffect(() => {
+    if (!id) return;
+
+    const fetchProduct = async () => {
+      setLoading(true);
+      try {
+        const fetchedProduct = await productsService.findOneById(id);
+        setProduct(fetchedProduct);
+        setError("");
+      } catch (error) {
+        setError("Product not found");
+        console.error("Error fetching product:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProduct();
+  }, [id]);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+  if (!product) return <h1>No product found!</h1>;
+
   return (
-    <div className="product-detail-container">
-      <div className="product-detail-header">
-        <h1 className="product-details-title">Product: {product.name}</h1>
-        <div className="buttons">
-          <Link to="/shopping-cart">
-            <button
-              className="add-button"
-              onClick={() =>
-                addProductToShoppingCart({
-                  id: product.id,
-                  category: product.category.name,
-                  productName: product.name,
-                  price: product.price,
-                  quantity: 1,
-                })
-              }
-            >
-              ADD
-            </button>
-          </Link>
-          <button className="edit-button">EDIT</button>
-          <button className="delete-button">DELETE</button>
+    <>
+      <div className="product-detail-container">
+        <div className="product-detail-header">
+          <h1 className="product-details-title">Product: {product.name}</h1>
+          <div className="buttons">
+            <Link to="/shopping-cart">
+              <button
+                className="add-button"
+                onClick={() =>
+                  addItemToCart({
+                    id: product.id,
+                    category: product.category.name,
+                    productName: product.name,
+                    price: product.price,
+                    quantity: 1,
+                  })
+                }
+              >
+                ADD
+              </button>
+            </Link>
+            <button className="edit-button">EDIT</button>
+            <button className="delete-button">DELETE</button>
+          </div>
         </div>
-      </div>
-      <table className="product-details-table">
-        <tbody>
+        <table className="product-details-table">
           <tr>
             <td>
               <div className="product-info">
@@ -71,9 +91,9 @@ const ProductDetails = () => {
               </div>
             </td>
           </tr>
-        </tbody>
-      </table>
-    </div>
+        </table>
+      </div>
+    </>
   );
 };
 

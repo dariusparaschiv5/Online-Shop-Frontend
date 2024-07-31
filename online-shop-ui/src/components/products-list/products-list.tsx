@@ -1,5 +1,5 @@
 import "./products-list.scss";
-import { Product, productsList } from "../../data/products";
+import { Product } from "../../data/products";
 import { Link } from "react-router-dom";
 import ProductListItem from "../product-list-item/product-list-item";
 import { useEffect, useState } from "react";
