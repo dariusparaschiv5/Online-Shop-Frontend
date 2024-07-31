@@ -8,20 +8,19 @@ import {
 
 import ShoppingCartItem from "../shopping-cart-item/shopping-cart-item";
 
-
 export default function ShoppingCart() {
   const cartItems = useContext(ShoppingCartContext);
 
   return (
     <>
-      <div className="shoping-container">
+      <div className="shopping-container">
         <div className="header-container">
           <h1>Shopping Cart</h1>
-        </div>
-        <div className="buttons">
-          <Link to="/checkout">
-            <button className="checkout-button">CHECKOUT</button>
-          </Link>
+          <div className="button-container">
+            <Link to="/checkout">
+              <button className="checkout-button">CHECKOUT</button>
+            </Link>
+          </div>
         </div>
       </div>
 
