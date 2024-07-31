@@ -7,7 +7,6 @@ type ProductProps = {
 };
 
 export default function ProductListItem({ product }: ProductProps) {
-  console.log("the product category is:" + product.category.name);
   return (
     <>
       <tr>
