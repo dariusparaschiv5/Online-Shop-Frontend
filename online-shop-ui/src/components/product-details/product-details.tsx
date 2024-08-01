@@ -46,6 +46,10 @@ const ProductDetails = () => {
     }
   };
 
+  const handleEdit = () => {
+    navigate(`/products/${id}/edit-product`)
+  }
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
   if (!product) return <h1>No product found!</h1>;
@@ -72,7 +76,7 @@ const ProductDetails = () => {
                 ADD
               </button>
             </Link>
-            <button className="edit-button">EDIT</button>
+            <button className="edit-button" onClick={handleEdit}>EDIT</button>
             <button className="delete-button" onClick={handleDelete}>
               DELETE
             </button>
