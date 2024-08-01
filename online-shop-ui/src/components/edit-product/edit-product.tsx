@@ -59,6 +59,11 @@ const EditProduct = () => {
     }
   };
 
+  const handleCancel = () => {
+    reset(initialData);
+    navigate(`/products/${id}`);
+  };
+
   const isDataChanged =
     JSON.stringify(allFields) !== JSON.stringify(initialData);
 
@@ -85,7 +90,7 @@ const EditProduct = () => {
         defaultValue={product.description}
       />
 
-      <button type="button">CANCEL</button>
+      <button type="button" onClick={handleCancel}>CANCEL</button>
       <input type="submit" disabled={!isDataChanged} value="SAVE" />
     </form>
   );
