@@ -1,14 +1,15 @@
-export interface OrderProduct {
-  product: string;
-  shippedFrom: string;
+export interface OrderDetail {
+  productId: string;
+  locationId: string;
   quantity: number;
 }
 
 export interface CreateOrderDTO {
-  customer: string;
+  customerId: string;
+  createdAt: Date;
   country: string;
   city: string;
   county: string;
-  addressStreet: string;
-  orderProducts: OrderProduct[];
+  streetAdress: string;
+  orderDetails: OrderDetail[];
 }

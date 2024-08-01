@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 
 export type ShoppingCartProduct = {
   id: string;
@@ -12,7 +12,14 @@ type ShoppingCartProviderProps = {
   children: ReactNode;
 };
 
-export const ShoppingCartContext = createContext<ShoppingCartProduct[]>([]);
+type ShoppingCartContextType = {
+  cartItems: ShoppingCartProduct[];
+  addItemToCart: (item: ShoppingCartProduct) => void;
+  clearCart: () => void;
+};
+
+export const ShoppingCartContext =
+  createContext<ShoppingCartContextType | null>(null);
 export const ShoppingCartAddContext = createContext<
   (item: ShoppingCartProduct) => void
 >(() => {});
@@ -41,11 +48,24 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
     }
   }
 
+  function clearCart() {
+    setShoppingCartItems([]);
+  }
+  
   return (
-    <ShoppingCartContext.Provider value={shoppingCartItems}>
+    <ShoppingCartContext.Provider value={{ cartItems: shoppingCartItems, addItemToCart, clearCart }}>
       <ShoppingCartAddContext.Provider value={addItemToCart}>
         {children}
       </ShoppingCartAddContext.Provider>
     </ShoppingCartContext.Provider>
   );
+}
+
+
+export function useShoppingCart() {
+  const context = useContext(ShoppingCartContext);
+  if (!context) {
+    throw new Error("useShoppingCart must be used within a ShoppingCartProvider");
+  }
+  return context;
 }

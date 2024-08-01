@@ -8,12 +8,14 @@ export const ordersService = {
     try {
       const response = await fetch(ORDERS_BASE_URL, {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(orderData),
       });
 
-      console.log("the order has been req from serv");
-
       if (!response.ok) {
+        console.log(await response.json());
         throw new Error(`HTTP error: Status ${response.status}`);
       }
 

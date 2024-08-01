@@ -12,10 +12,8 @@ export default function Products() {
 
   useEffect(() => {
     const fetchAllProducts = async () => {
-      console.log("Starting to fetch all products...");
       try {
         const allProducts = await productsService.findAll();
-        console.log("Fetched products successfully:", allProducts);
         setProducts(allProducts);
         setError(null);
       } catch (err) {
@@ -28,7 +26,6 @@ export default function Products() {
         setProducts(null);
       } finally {
         setLoading(false);
-        console.log("Fetching products process completed.");
       }
     };
 
