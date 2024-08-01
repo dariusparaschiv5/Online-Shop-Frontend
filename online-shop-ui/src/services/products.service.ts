@@ -1,4 +1,5 @@
 import { PRODUCT_API_URL } from "../constants/url.constant";
+import { ProductData } from "../interfaces/product.inteface";
 
 export const productsService = {
   findAll: async () => {
@@ -50,6 +51,29 @@ export const productsService = {
       }
     } catch (err) {
       console.error("Failed to delete:", err);
+      throw err;
+    }
+  },
+
+  update: async (id: string, productData: ProductData) => {
+    try {
+      const response = await fetch(`${PRODUCT_API_URL}/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(productData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Failed to update product:", errorData);
+        throw new Error(`HTTP error: Status ${response.status}`);
+      }
+
+      return response.json();
+    } catch (err) {
+      console.error("Error updating product:", err);
       throw err;
     }
   },
