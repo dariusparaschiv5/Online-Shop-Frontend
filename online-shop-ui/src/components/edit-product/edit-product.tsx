@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Product } from "../../data/products";
 import { productsService } from "../../services/products.service";
 import { useForm } from "react-hook-form";
@@ -9,7 +9,9 @@ const EditProduct = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [product, setProduct] = useState<Product | null>(null);
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset, watch } = useForm();
+  const [initialData, setInitialData] = useState({});
+  const allFields = watch();
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
@@ -22,7 +24,8 @@ const EditProduct = () => {
       try {
         const fetchedProduct = await productsService.findOneById(id);
         setProduct(fetchedProduct);
-        reset(fetchProduct);
+        setInitialData(fetchedProduct);
+        reset(fetchedProduct);
         setError("");
       } catch (error) {
         setError("Product not found");
@@ -40,8 +43,14 @@ const EditProduct = () => {
   if (!product) return <h1>No product found!</h1>;
 
   const onSubmit = async (data: ProductData) => {
+    if (JSON.stringify(data) === JSON.stringify(initialData)) {
+      alert("No changes have been made.");
+      return;
+    }
+
     try {
       const updatedProduct = await productsService.update(product.id, data);
+      alert("Product updated successfully!");
       console.log("Product uptdated succesfully: " + updatedProduct);
       navigate(`/products/${id}`);
     } catch (error) {
@@ -49,6 +58,9 @@ const EditProduct = () => {
       setError("Failed to update product");
     }
   };
+
+  const isDataChanged =
+    JSON.stringify(allFields) !== JSON.stringify(initialData);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -74,7 +86,7 @@ const EditProduct = () => {
       />
 
       <button type="button">CANCEL</button>
-      <input type="submit" value="SAVE" />
+      <input type="submit" disabled={!isDataChanged} value="SAVE" />
     </form>
   );
 };
