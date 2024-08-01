@@ -4,6 +4,7 @@ import Products from "./components/products-list/products-list";
 import ProductDetails from "./components/product-details/product-details";
 import ShoppingCart from "./components/shopping-cart/shopping-cart";
 import EditProduct from "./components/edit-product/edit-product";
+import CreateProduct from "./components/create-product/create-product";
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
           <Route path=":id/edit-product" element={<EditProduct />} />
         </Route>
         <Route path="/shopping-cart" element={<ShoppingCart />} />
+        <Route path="/create-product" element={<CreateProduct/>} />
         <Route path="*" element={<Navigate to="/products" />} />
       </Routes>
     </>

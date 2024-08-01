@@ -77,4 +77,25 @@ export const productsService = {
       throw err;
     }
   },
+
+  create: async (productData: ProductData) => {
+    try {
+      const response = await fetch(PRODUCT_API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(productData),
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Failed to create product:", errorData);
+        throw new Error(`HTTP error: Status ${response.status}`);
+      }
+      return response.json();
+    } catch (err) {
+      console.error("Error creating product:", err);
+      throw err;
+    }
+  },
 };

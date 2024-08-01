@@ -43,6 +43,9 @@ export default function Products() {
           <Link to="/shopping-cart">
             <button className="cart-button">CART</button>
           </Link>
+          <Link to="/create-product">
+            <button className="add-button">ADD</button>
+          </Link>
         </div>
 
         <table>

@@ -4,6 +4,7 @@ import { Product } from "../../data/products";
 import { productsService } from "../../services/products.service";
 import { useForm } from "react-hook-form";
 import { ProductData } from "../../interfaces/product.inteface";
+import "./edit-product.scss";
 
 const EditProduct = () => {
   const { id } = useParams();
@@ -68,31 +69,38 @@ const EditProduct = () => {
     JSON.stringify(allFields) !== JSON.stringify(initialData);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <h1>Edit: {product.name}</h1>
-      <label>Name</label>
-      <input defaultValue={product.name} {...register("name")} />
+    <div className="edit-product-container">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <h1>Edit: {product.name}</h1>
+        <label>Name</label>
+        <input defaultValue={product.name} {...register("name")} />
 
-      <label>Category</label>
-      <input defaultValue={product.category.name} {...register("category")} />
+        <label>Category</label>
+        <input
+          defaultValue={product.category.name}
+          {...register("product_category")}
+        />
 
-      <label>Image</label>
-      <input
-        defaultValue="http://example.com/image.png"
-        {...register("image")}
-      />
+        <label>Image</label>
+        <input
+          defaultValue="http://example.com/image.png"
+          {...register("image")}
+        />
 
-      <label>Price</label>
-      <input defaultValue={product.price} {...register("price")} />
+        <label>Price</label>
+        <input defaultValue={product.price} {...register("price")} />
 
-      <textarea
-        {...register("description")}
-        defaultValue={product.description}
-      />
+        <textarea
+          {...register("description")}
+          defaultValue={product.description}
+        />
 
-      <button type="button" onClick={handleCancel}>CANCEL</button>
-      <input type="submit" disabled={!isDataChanged} value="SAVE" />
-    </form>
+        <button type="button" onClick={handleCancel}>
+          CANCEL
+        </button>
+        <input type="submit" disabled={!isDataChanged} value="SAVE" />
+      </form>
+    </div>
   );
 };
 

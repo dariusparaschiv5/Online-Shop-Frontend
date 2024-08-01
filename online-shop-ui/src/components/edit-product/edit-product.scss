@@ -1,89 +1,65 @@
 .edit-product-container {
-  font-family: Arial, sans-serif;
-  font-size: large;
+  margin: 60px;
   padding: 20px;
-  margin: 20px;
-  border: none !important;
+  background: #ffffff;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  border-radius: 8px;
 
-  table,
-  tr,
-  td {
-    border: none !important;
+  h1 {
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
   }
 
-  .edit-product-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
+  form {
+    display: grid;
+    grid-gap: 10px;
+    margin: 20px 0;
 
-    .edit-product-title {
-      flex-grow: 1;
+    label {
+      font-size: 16px;
+      color: #666;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea {
+      width: 100%;
+      padding: 8px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    textarea {
+      height: 100px;
+      resize: none;
     }
 
     .buttons {
       display: flex;
-      justify-content: flex-end;
-
-      .cancel-button,
-      .save-button {
-        padding: 12px 40px;
-        font-size: 16px;
-        font-weight: bold;
-        border-radius: 12px;
-        margin-left: 20px;
-        cursor: pointer;
-      }
-
-      .save-button {
-        background-color: #007bff;
-        color: white;
-      }
-    }
-  }
-
-  .edit-product-table {
-    width: 100%;
-    border-collapse: collapse;
-    border: none !important;
-
-    th,
-    td {
-      text-align: left;
-      padding: 10px;
-      border-right: 1.5px solid #797373;
-      border-bottom: 1.5px solid #797373;
+      justify-content: space-between;
+      margin-top: 20px;
     }
 
-    .product-image {
-      img {
-        width: 120px;
-        height: 110px;
-        display: block;
-        margin-left: auto;
-        margin-bottom: 105px;
-        background-color: grey;
-      }
+    button, input[type="submit"] {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      outline: none;
     }
 
-    .product-info {
-      margin-bottom: 20px;
-      border: none !important;
+    .cancel-button {
+      background-color: #f44336;
+      color: white;
+    }
 
-      .info-row {
-        display: flex;
-        margin-bottom: 10px;
-        padding: 10px;
-        border: none !important;
-
-        label {
-          color: gray;
-          width: 100px;
-          margin-right: 50px;
-          white-space: nowrap;
-          text-align: right;
-        }
-      }
+    .save-button {
+      background-color: #4CAF50;
+      color: white;
     }
   }
 }
