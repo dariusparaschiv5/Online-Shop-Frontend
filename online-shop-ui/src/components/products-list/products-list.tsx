@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { productsService } from "../../services/products.service";
 
 export default function Products() {
-  const [products, setProducts] = useState<Product[] | null>(null);
+  const [products, setProducts] = useState<Product[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -23,43 +23,38 @@ export default function Products() {
         } else {
           setError("An unknown error occurred");
         }
-        setProducts(null);
+        setProducts([]);
       } finally {
         setLoading(false);
       }
     };
 
     fetchAllProducts();
-  }, [products?.length]);
+  }, [products.length]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <>
-      <div className="products-container">
-        <div className="header-container">
-          <h1 className="products-title">Products</h1>
-          <Link to="/shopping-cart">
-            <button className="cart-button">CART</button>
-          </Link>
-        </div>
-
-        <table>
-          <tr>
-            <th>Category</th>
-            <th>Product Name</th>
-            <th>Price</th>
-            <th></th>
-          </tr>
-          {products &&
-            products.map((product) =>
-              product ? (
-                <ProductListItem key={product.id} product={product} />
-              ) : null
-            )}
-        </table>
+    <div className="products-container">
+      <div className="header-container">
+        <h1 className="products-title">Products</h1>
+        <Link to="/shopping-cart">
+          <button className="cart-button">CART</button>
+        </Link>
       </div>
-    </>
+
+      <table>
+        <tr>
+          <th>Category</th>
+          <th>Product Name</th>
+          <th>Price</th>
+          <th></th>
+        </tr>
+        {products.map((product) => (
+          <ProductListItem key={product.id} product={product} />
+        ))}
+      </table>
+    </div>
   );
 }

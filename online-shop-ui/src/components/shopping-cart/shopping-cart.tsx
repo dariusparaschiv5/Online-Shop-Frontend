@@ -80,32 +80,30 @@ export default function ShoppingCart() {
   }
 
   return (
-    <>
-      <div className="shopping-container">
-        <div className="header-container">
-          <h1>Shopping Cart</h1>
-          <div className="button-container">
-            <Link to="/checkout">
-              <button className="checkout-button" onClick={handleCheckout}>
-                CHECKOUT
-              </button>
-            </Link>
-          </div>
+    <div className="shopping-container">
+      <div className="header-container">
+        <h1>Shopping Cart</h1>
+        <div className="button-container">
+          <Link to="/checkout">
+            <button className="checkout-button" onClick={handleCheckout}>
+              CHECKOUT
+            </button>
+          </Link>
         </div>
-
-        <table>
-          <tr>
-            <th>Category</th>
-            <th>Product Name</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th></th>
-          </tr>
-          {cartItems.map((item: ShoppingCartProduct) => (
-            <ShoppingCartItem key={item.id} item={item} />
-          ))}
-        </table>
       </div>
-    </>
+
+      <table>
+        <tr>
+          <th>Category</th>
+          <th>Product Name</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th></th>
+        </tr>
+        {cartItems.map((item: ShoppingCartProduct) => (
+          <ShoppingCartItem key={item.id} item={item} />
+        ))}
+      </table>
+    </div>
   );
 }

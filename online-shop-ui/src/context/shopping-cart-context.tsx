@@ -30,30 +30,27 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
   >([]);
 
   function addItemToCart(item: ShoppingCartProduct) {
-    const isInCart: boolean =
-      shoppingCartItems.find((i) => i.id === item.id) !== undefined
-        ? true
-        : false;
-    if (isInCart) {
-      setShoppingCartItems((prevItems) =>
-        prevItems.map((i) =>
+    setShoppingCartItems((prevItems) => {
+      const existingItem = prevItems.find((i) => i.id === item.id);
+
+      if (existingItem) {
+        return prevItems.map((i) =>
           i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
-        )
-      );
-    } else {
-      setShoppingCartItems((prevItems) => [
-        ...prevItems,
-        { ...item, quantity: 1 },
-      ]);
-    }
+        );
+      } else {
+        return [...prevItems, { ...item, quantity: 1 }];
+      }
+    });
   }
 
   function clearCart() {
     setShoppingCartItems([]);
   }
-  
+
   return (
-    <ShoppingCartContext.Provider value={{ cartItems: shoppingCartItems, addItemToCart, clearCart }}>
+    <ShoppingCartContext.Provider
+      value={{ cartItems: shoppingCartItems, addItemToCart, clearCart }}
+    >
       <ShoppingCartAddContext.Provider value={addItemToCart}>
         {children}
       </ShoppingCartAddContext.Provider>
@@ -61,11 +58,12 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
   );
 }
 
-
 export function useShoppingCart() {
   const context = useContext(ShoppingCartContext);
   if (!context) {
-    throw new Error("useShoppingCart must be used within a ShoppingCartProvider");
+    throw new Error(
+      "useShoppingCart must be used within a ShoppingCartProvider"
+    );
   }
   return context;
 }

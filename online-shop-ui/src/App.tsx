@@ -6,16 +6,14 @@ import ShoppingCart from "./components/shopping-cart/shopping-cart";
 
 export default function App() {
   return (
-    <>
-      <Routes>
-        <Route path="/" element={<Navigate to="/products" />} />
-        <Route path="/products">
-          <Route index element={<Products />} />
-          <Route path=":id" element={<ProductDetails />} />
-        </Route>
-        <Route path="/shopping-cart" element={<ShoppingCart/>} />
-        <Route path="*" element={<Navigate to="/products" />} />
-      </Routes>
-    </>
+    <Routes>
+      <Route path="/" element={<Navigate to="/products" />} />
+      <Route path="/products">
+        <Route index element={<Products />} />
+        <Route path=":id" element={<ProductDetails />} />
+      </Route>
+      <Route path="/shopping-cart" element={<ShoppingCart />} />
+      <Route path="*" element={<Navigate to="/products" />} />
+    </Routes>
   );
 }
