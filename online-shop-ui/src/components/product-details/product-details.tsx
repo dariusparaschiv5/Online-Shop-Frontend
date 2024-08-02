@@ -40,7 +40,7 @@ const ProductDetails = () => {
         if (id) {
           await productsService.delete(id);
         } else {
-          throw Error("The product's id that need to be deleted is not valid");
+          throw Error("The product's id that needs to be deleted is not valid");
         }
         navigate("/products");
       } catch (error) {
