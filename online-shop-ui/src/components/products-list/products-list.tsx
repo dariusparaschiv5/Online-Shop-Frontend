@@ -4,11 +4,16 @@ import { Link } from "react-router-dom";
 import ProductListItem from "../product-list-item/product-list-item";
 import { useEffect, useState } from "react";
 import { productsService } from "../../services/products.service";
+import { useAuth } from "../../context/useAuth";
 
 export default function Products() {
   const [products, setProducts] = useState<Product[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+
+  const { user } = useAuth();
+
+  console.log(user?.username);
 
   useEffect(() => {
     const fetchAllProducts = async () => {
@@ -38,8 +43,9 @@ export default function Products() {
   return (
     <>
       <div className="products-container">
+        <h1>{user && <p>Welcome, {user.username}</p>}</h1>
         <div className="header-container">
-          <h1 className="products-title">Products</h1>
+          <h2 className="products-title">Products</h2>
           <Link to="/shopping-cart">
             <button className="cart-button">CART</button>
           </Link>

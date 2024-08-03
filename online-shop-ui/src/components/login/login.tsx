@@ -1,45 +1,56 @@
-import { useForm } from 'react-hook-form';
-import "./login.scss"
+import { FormEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function Login() {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+import { LoginCredentials } from "../../interfaces/auth.inteface";
+import { authService } from "../../services/auth.service";
+import { useAuth } from "../../context/useAuth";
 
-  const onSubmit = (data: unknown) => {
-    console.log(data);
-    // Implement login logic here
+import "./login.scss";
+
+export const LoginPage = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
+
+  const { login } = useAuth();
+
+  // const navigate = useNavigate();
+
+  const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const credentials: LoginCredentials = { username, password, role };
+
+    try {
+      await login(credentials);
+      // No need to handle navigation here if it's handled inside the login method
+    } catch (error) {
+      alert("Invalid username or password");
+    }
   };
 
   return (
     <div className="login-container">
-      <form onSubmit={handleSubmit(onSubmit)} className="login-form">
-        <h2>Login</h2>
-        
-        <div className="form-group">
-          <label htmlFor="username">Username</label>
-          <input
-            id="username"
-            type="text"
-            {...register("username", { required: true })}
-            placeholder="Enter your username"
-          />
-          {errors.username && <p className="error">Username is required</p>}
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            {...register("password", { required: true })}
-            placeholder="Enter your password"
-          />
-          {errors.password && <p className="error">Password is required</p>}
-        </div>
-
-        <button type="submit" className="login-button">Login</button>
+      <form onSubmit={handleLogin}>
+        <label htmlFor="username">Username:</label>
+        <input
+          id="username"
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <label htmlFor="password">Password:</label>
+        <input
+          id="password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button type="submit" className="login-button ">
+          Login
+        </button>
       </form>
     </div>
   );
-}
+};
 
-export default Login;
+export default LoginPage;
