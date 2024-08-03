@@ -1,6 +1,6 @@
 import "./products-list.scss";
 import { Product } from "../../data/products";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ProductListItem from "../product-list-item/product-list-item";
 import { useEffect, useState } from "react";
 import { productsService } from "../../services/products.service";
@@ -11,9 +11,16 @@ export default function Products() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const { user, logout } = useAuth();
 
   console.log(user?.username);
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login"); // Redirect to login page after logout
+  };
 
   useEffect(() => {
     const fetchAllProducts = async () => {
@@ -42,8 +49,13 @@ export default function Products() {
 
   return (
     <>
-      <div className="products-container">
+      <div className="nav-container">
         <h1>{user && <p>Welcome, {user.username}</p>}</h1>
+        <button onClick={handleLogout} className="logout-button">
+          Logout
+        </button>
+      </div>
+      <div className="products-container">
         <div className="header-container">
           <h2 className="products-title">Products</h2>
           <Link to="/shopping-cart">

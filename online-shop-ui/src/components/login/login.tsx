@@ -6,7 +6,6 @@ import { authService } from "../../services/auth.service";
 import { useAuth } from "../../context/useAuth";
 
 import "./login.scss";
-
 export const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -14,17 +13,28 @@ export const LoginPage = () => {
 
   const { login } = useAuth();
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const credentials: LoginCredentials = { username, password, role };
+    localStorage.clear();
+    const credentials: LoginCredentials = { username, password };
 
     try {
-      await login(credentials);
-      // No need to handle navigation here if it's handled inside the login method
+      localStorage.clear();
+
+      const { accessToken, refreshToken } = await authService.login(
+        credentials
+      );
+      login({username, password, role});
+      console.log("The logged in usernmae is: " + username);
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
+      navigate("/products"); // Redirect to products page upon successful login
     } catch (error) {
-      alert("Invalid username or password");
+      if (error instanceof Error) {
+        alert(error.message); // Show error message to user
+      }
     }
   };
 
