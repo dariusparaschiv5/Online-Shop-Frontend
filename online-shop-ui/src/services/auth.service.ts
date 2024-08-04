@@ -1,12 +1,8 @@
-import {
-  LoginCredentials,
-  LoginResponse,
-} from "../interfaces/auth.inteface";
+import { LoginCredentials, LoginResponse } from "../interfaces/auth.inteface";
 
 const API_URL = "http://localhost:3000";
 
 export const authService = {
-
   async login(credentials: LoginCredentials): Promise<LoginResponse> {
     const response = await fetch(`${API_URL}/auth/login`, {
       method: "POST",
@@ -24,3 +20,4 @@ export const authService = {
     return response.json();
   },
 };
+

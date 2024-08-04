@@ -17,17 +17,16 @@ export const LoginPage = () => {
 
   const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    localStorage.clear();
     const credentials: LoginCredentials = { username, password };
 
     try {
       localStorage.clear();
 
-      const { accessToken, refreshToken } = await authService.login(
-        credentials
-      );
-      login({username, password, role});
-      console.log("The logged in usernmae is: " + username);
+      const response = await authService.login(credentials);
+      const { accessToken, refreshToken, user } = response; 
+      const { role: fetchedRole } = user;
+      setRole(fetchedRole);
+      login({ username, password, role: fetchedRole });
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
       navigate("/products"); // Redirect to products page upon successful login

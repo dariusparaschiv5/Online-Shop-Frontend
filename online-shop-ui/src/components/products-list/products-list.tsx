@@ -15,8 +15,6 @@ export default function Products() {
 
   const { user, logout } = useAuth();
 
-  console.log(user?.username);
-
   const handleLogout = () => {
     logout();
     navigate("/login"); // Redirect to login page after logout
