@@ -23,16 +23,19 @@ export const LoginPage = () => {
       localStorage.clear();
 
       const response = await authService.login(credentials);
-      const { accessToken, refreshToken, user } = response; 
+      const { accessToken, refreshToken, user } = response;
       const { role: fetchedRole } = user;
       setRole(fetchedRole);
       login({ username, password, role: fetchedRole });
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
-      navigate("/products"); // Redirect to products page upon successful login
+      navigate("/products");
     } catch (error) {
-      if (error instanceof Error) {
-        alert(error.message); // Show error message to user
+      if (error instanceof Error && error.message === "Unauthorized") {
+        navigate("/login"); 
+        alert("Invalid username or password"); 
+      } else {
+        alert(error); 
       }
     }
   };

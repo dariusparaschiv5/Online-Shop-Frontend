@@ -11,7 +11,7 @@ export default function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Navigate to="/login" />} />  
+        <Route path="/" element={<Navigate to="/products" />} />  
         <Route path="/login" element={<Login />} />  
         <Route path="/products">
           <Route index element={<Products />} />
@@ -20,7 +20,7 @@ export default function App() {
         </Route>
         <Route path="/shopping-cart" element={<ShoppingCart />} />
         <Route path="/create-product" element={<CreateProduct />} />
-        <Route path="*" element={<Navigate to="/login" />} />  
+        <Route path="*" element={<Navigate to="/products" />} />  
       </Routes>
     </>
   );

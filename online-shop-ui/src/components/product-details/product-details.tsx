@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { Product } from "../../data/products";
 import { productsService } from "../../services/products.service";
 import "./product-details.scss";
+import { useAuth } from "../../context/useAuth";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -11,6 +12,7 @@ const ProductDetails = () => {
   const [product, setProduct] = useState<Product | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+  const { user } = useAuth();
 
   const addItemToCart = useContext(ShoppingCartAddContext);
 
@@ -47,8 +49,13 @@ const ProductDetails = () => {
   };
 
   const handleEdit = () => {
-    navigate(`/products/${id}/edit-product`)
-  }
+    if (user?.role !== "admin") {
+      alert("Only admins can edit products.");
+      navigate("/login");
+      return;
+    }
+    navigate(`/products/${id}/edit-product`);
+  };
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
