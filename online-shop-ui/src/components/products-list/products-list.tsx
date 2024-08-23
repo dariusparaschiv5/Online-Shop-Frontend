@@ -1,49 +1,25 @@
 import "./products-list.scss";
-import { Product } from "../../data/products";
 import { Link, useNavigate } from "react-router-dom";
 import ProductListItem from "../product-list-item/product-list-item";
-import { useEffect, useState } from "react";
-import { productsService } from "../../services/products.service";
 import { useAuth } from "../../context/useAuth";
+import { useGetProductsQuery } from "../../productsApi"; // Import the RTK Query hook
 
 export default function Products() {
-  const [products, setProducts] = useState<Product[] | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-
   const navigate = useNavigate();
-
   const { user, logout } = useAuth();
+  const { data: products, error, isLoading } = useGetProductsQuery(); // Use RTK Query hook
 
   const handleLogout = () => {
     logout();
     navigate("/login"); // Redirect to login page after logout
   };
 
-  useEffect(() => {
-    const fetchAllProducts = async () => {
-      try {
-        const allProducts = await productsService.findAll();
-        setProducts(allProducts);
-        setError(null);
-      } catch (err) {
-        console.error("Error fetching products:", err);
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError("An unknown error occurred");
-        }
-        setProducts(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchAllProducts();
-  }, [products?.length]);
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (isLoading) return <div>Loading...</div>;
+  if (error) {
+    console.error("Error fetching products:", error);
+    return <div>Error: {error instanceof Error ? error.message : "An unknown error occurred"}</div>;
+ }
+ 
 
   return (
     <>
@@ -71,12 +47,9 @@ export default function Products() {
             <th>Price</th>
             <th></th>
           </tr>
-          {products &&
-            products.map((product) =>
-              product ? (
-                <ProductListItem key={product.id} product={product} />
-              ) : null
-            )}
+          {products?.map((product) => (
+            <ProductListItem key={product.id} product={product} />
+          ))}
         </table>
       </div>
     </>
